@@ -1,14 +1,20 @@
 ﻿
 using May2022.pages;
+using May2022.utilities;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-public class TimeNMa_Tests
+[TestFixture]
+public class TimeNMa_Tests: CommonDriver
+
 {
-   static void Main(string[] args)
+  
+    [SetUp]
+    public void LoginActions()
     {
         //setting a driver interface
-        IWebDriver driver = new ChromeDriver();
+        driver = new ChromeDriver();
 
         //login page object initialisation and definition
 
@@ -20,14 +26,45 @@ public class TimeNMa_Tests
         Homepage Homepageobj = new Homepage();
         Homepageobj.GoToHomePg(driver);
 
-        //Time and Material page object initialisation and definition
+    }
+
+    [Test]
+
+    public void CreateTM()
+    {
 
         TMPage TMPageojb = new TMPage();
         TMPageojb.CreateTM(driver);
+    }
 
+    [Test]
+
+    public void EditTM()
+    {
+        TMPage TMPageojb = new TMPage();
         TMPageojb.EditTM(driver);
+    }
 
+    [Test]
+
+    public void DeleteTM()
+    {
+        TMPage TMPageojb = new TMPage();
         TMPageojb.DeleteTM(driver);
+    }
+
+    [TearDown]
+
+    public void CloseTest()
+    {
 
     }
 }
+
+
+
+
+
+
+
+

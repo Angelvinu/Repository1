@@ -11,7 +11,7 @@ namespace May2022.utilities
     public  class WaitHelpers
     {
         //reusable function for wait amd clickable
-        public void WaitforWebElement(IWebElement driver, string locator, string locatorValue, int seconds)
+        public static void WaitToBeClickable(IWebElement driver, string locator, string locatorValue, int seconds)
         {
             var wait = new WebDriverWait ((IWebDriver)driver, new TimeSpan(0, 0, 2));
 
@@ -28,5 +28,26 @@ namespace May2022.utilities
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locatorValue)));
             }
         }
+
+        public static void WaitToBeVisible(IWebElement driver, string locator, string locatorValue, int seconds)
+
+        {
+            var wait = new WebDriverWait((IWebDriver)driver, new TimeSpan(0, 0, seconds));
+
+            if (locator == "XPath")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementIsVisible(By.XPath(locatorValue)));
+            }
+            if (locator == "Id")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.Id(locatorValue)));
+            }
+            if (locator == "CssSelector")
+            {
+                wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locatorValue)));
+            }
+
+        }
     }
+
 }

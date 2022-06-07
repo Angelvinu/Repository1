@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,14 +43,16 @@ namespace May2022.pages
             IWebElement materialRecord = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
             Thread.Sleep(2000);
 
-            if (materialRecord.Text == "visual1")
-            {
-                Console.WriteLine("Material record sucessfully created.");
-            }
-            else
-            {
-                Console.WriteLine("Material record was not created sucessfully.");
-            }
+            Assert.That(materialRecord.Text == "visual1", "Material record was not created sucessfully.");
+
+            //if (materialRecord.Text == "visual1")
+            //{
+            //    Console.WriteLine("Material record sucessfully created.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Material record was not created sucessfully.");
+            //}
         }
         public void EditTM(IWebDriver driver)
 
@@ -89,14 +92,17 @@ namespace May2022.pages
 
             //check that the material record has been created sucessfully
             IWebElement newMaterial = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
-            if (newMaterial.Text == "Team1")
-            {
-                Console.WriteLine("New record updated sucessfully.");
-            }
-            else
-            {
-                Console.WriteLine("New record was not updated sucessfully.");
-            }
+
+            Assert.That(newMaterial.Text == "Team1", "New record was not updated sucessfully.");
+            
+            //if (newMaterial.Text == "Team1")
+            //{
+            //    Console.WriteLine("New record updated sucessfully.");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("New record was not updated sucessfully.");
+            //}
             Thread.Sleep(2000);
         }
         public void DeleteTM(IWebDriver driver)
