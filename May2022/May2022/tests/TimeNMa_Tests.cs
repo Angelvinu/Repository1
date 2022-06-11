@@ -5,61 +5,69 @@ using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
-[TestFixture]
-public class TimeNMa_Tests: CommonDriver
-
+namespace May2022.utilities
 {
-  
-    [SetUp]
-    public void LoginActions()
+
+    [TestFixture]
+    public class TimeNMa_Tests : CommonDriver
+
     {
-        //setting a driver interface
-        driver = new ChromeDriver();
+    
 
-        //login page object initialisation and definition
+        [SetUp]
+        public void LoginActions()
+        {
+            //setting a driver interface
+            driver = new ChromeDriver();
 
-        LoginPage LoginPageobj = new LoginPage();
-        LoginPageobj.LoginSteps(driver);
+            //login page object initialisation and definition
 
-        //home page object initialisation and definition
+            LoginPage LoginPageobj = new LoginPage();
+            LoginPageobj.LoginSteps(driver);
 
-        Homepage Homepageobj = new Homepage();
-        Homepageobj.GoToHomePg(driver);
+            //home page object initialisation and definition
 
-    }
+            Homepage Homepageobj = new Homepage();
+            Homepageobj.GoToHomePg(driver);
 
-    [Test]
+        }
 
-    public void CreateTM()
-    {
+        [Test, Order(1), Description("First Test")]
 
-        TMPage TMPageojb = new TMPage();
-        TMPageojb.CreateTM(driver);
-    }
+        public void CreateTM()
+        {
 
-    [Test]
+            TMPage TMPageojb = new TMPage();
+            TMPageojb.CreateTM(driver);
+        }
 
-    public void EditTM()
-    {
-        TMPage TMPageojb = new TMPage();
-        TMPageojb.EditTM(driver);
-    }
+        [Test, Order(2), Description("Second Test")]
 
-    [Test]
+        public void EditTM()
+        {
+            TMPage TMPageojb = new TMPage();
+            TMPageojb.EditTM(driver);
+        }
 
-    public void DeleteTM()
-    {
-        TMPage TMPageojb = new TMPage();
-        TMPageojb.DeleteTM(driver);
-    }
+        [Test, Order(3),Description("Third Test")]
 
-    [TearDown]
+        public void DeleteTM()
+        {
+            TMPage TMPageojb = new TMPage();
+            TMPageojb.DeleteTM(driver);
+        }
 
-    public void CloseTest()
-    {
+        [TearDown]
 
+        public void CloseTest()
+        {
+            driver.Quit();
+        }
     }
 }
+
+
+
 
 
 

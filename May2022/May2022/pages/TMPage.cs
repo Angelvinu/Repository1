@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using May2022.utilities;
+using NUnit.Framework;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,22 @@ namespace May2022.pages
         {
             //identify the create new button and click on it
             driver.FindElement(By.XPath("//*[@id='container']/p/a")).Click();
+            
+
+            //identify the drop down TypeCode for options.
+            driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[1]/div/span[1]/span/span[1]")).Click();
+            Thread.Sleep(2000);
 
             //select Material from the type code drop down 
-            driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[1]/div/span[1]/span/span[1]")).Click();
-            Thread.Sleep(1000);
+            IWebElement DropDown = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/ li[1]"));
+            DropDown.Click();
+
+            //To select item from dropdwon
+            //var TMDropDown = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[1]/div/span[1]"));
+            //Create select element subject
+            //var SelectElement = new SelectElement(TMDropDown);
+            //select By Text
+            // SelectElement.SelectByText("Material");
 
             //identify code text box and enter the code
             driver.FindElement(By.Id("Code")).SendKeys("visual1");
@@ -30,20 +43,31 @@ namespace May2022.pages
             //identify price text box and enter the price per unit
             driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]")).Click();
 
-            driver.FindElement(By.Id("Price")).SendKeys("60");
+            driver.FindElement(By.Id("Price")).SendKeys("60.00");
 
             //identify the save button and click on save
             driver.FindElement(By.Id("SaveButton")).Click();
             Thread.Sleep(2000);
 
-            //click on go to the last page button   //check if the material record was created sucessfully
+            //click on go to the last page button   
             driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span")).Click();
             Thread.Sleep(2000);
 
-            IWebElement materialRecord = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            //check if the material record was created sucessfully
+            IWebElement RecentCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            IWebElement RecentTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+            IWebElement RecentDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+            IWebElement RecentPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+
             Thread.Sleep(2000);
 
-            Assert.That(materialRecord.Text == "visual1", "Material record was not created sucessfully.");
+            //Assertion
+
+            Assert.That(RecentCode.Text == "visual1", "Actual Material record and expected doesnot match.");
+            Assert.That(RecentTypeCode.Text == "M", "Actual code and expected doesnot match.");
+            Assert.That(RecentDescription.Text == "sample 1", "Actual description and expected doesnot match.");
+            Assert.That(RecentPrice.Text == "$60.00", "Actual price and expected doesnot match.");
+
 
             //if (materialRecord.Text == "visual1")
             //{
@@ -60,27 +84,46 @@ namespace May2022.pages
 
             //3.Check if a user is able to update an existing time/material record successfully
 
-            //click on the edit option to update data
-            IWebElement editCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
-            editCode.Click();
+            //click on go to the last page button 
+
+            driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span")).Click();
             Thread.Sleep(1000);
 
+            //click on the edit option to update data
+            IWebElement editCode2 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
+            editCode2.Click();
+            Thread.Sleep(1000);
+
+            //identify the drop down TypeCode for options.
+            driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[1]/div/span[1]/span/span[1]")).Click();
+            Thread.Sleep(2000);
+
+            //select Material from the type code drop down 
+            IWebElement DropDown2 = driver.FindElement(By.XPath("//*[@id='TypeCode_listbox']/ li[1]"));
+            DropDown2.Click();
+
             //select the code text box,remove the existing content and update 
-            IWebElement newCode = driver.FindElement(By.Id("Code"));
-            newCode.Clear();
-            newCode.SendKeys("Team1");
+            IWebElement edittedCode = driver.FindElement(By.Id("Code"));
+            edittedCode.Clear();
+            edittedCode.SendKeys("Team1");
 
             //select the description text box,remove the existing content and update in the textbox
-            IWebElement describe = driver.FindElement(By.Id("Description"));
-            describe.Clear();
-            describe.SendKeys("sams2");
+            IWebElement editDescription = driver.FindElement(By.Id("Description"));
+            editDescription.Clear();
+            editDescription.SendKeys("sams2");
             Thread.Sleep(2000);
 
             //select the price inthe text box,remove the existing content and update in the textbox
-            IWebElement newPrice = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
-            newPrice.Click();
+            IWebElement editPrice = driver.FindElement(By.XPath("//*[@id='TimeMaterialEditForm']/div/div[4]/div/span[1]/span/input[1]"));
+            editPrice.Click();
+            Thread.Sleep(2000);
+
             IWebElement priceInput = driver.FindElement(By.Id("Price"));
-            priceInput.SendKeys("20");
+            priceInput.Clear();
+            Thread.Sleep(2000);
+            editPrice.Click();
+            priceInput.SendKeys("20.00");
+            Thread.Sleep(2000);
 
             //save the updated information
             driver.FindElement(By.Id("SaveButton")).Click();
@@ -91,10 +134,22 @@ namespace May2022.pages
             Thread.Sleep(3000);
 
             //check that the material record has been created sucessfully
-            IWebElement newMaterial = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            IWebElement Code2 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
 
-            Assert.That(newMaterial.Text == "Team1", "New record was not updated sucessfully.");
-            
+            IWebElement edittedTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+            IWebElement Description2 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+            IWebElement Price2 = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+
+            Thread.Sleep(2000);
+
+            //Assertion
+
+            Assert.That(Code2.Text == "Team1", "Actual Material record and expected doesnot match.");
+            Assert.That(edittedTypeCode.Text == "M", "Actual code and expected doesnot match.");
+            Assert.That(Description2.Text == "sams2", "Actual description and expected doesnot match.");
+            Assert.That(Price2.Text == "$20.00", "Actual price and expected doesnot match.");
+           
+
             //if (newMaterial.Text == "Team1")
             //{
             //    Console.WriteLine("New record updated sucessfully.");
@@ -110,15 +165,32 @@ namespace May2022.pages
         {
             //4.Check if a user is able to delete an existing time/material record successfully
 
+
+            //click on go to the last page button
+            driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span")).Click();
+            Thread.Sleep(1000);
+
             //click on the delete option
+
             IWebElement deleteARow = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[2]"));
             deleteARow.Click();
             Thread.Sleep(2000);
-            Console.WriteLine("Delete button clicked");
 
             //click ok button
             driver.SwitchTo().Alert().Accept();
+            Console.WriteLine("Delete button clicked");
             Thread.Sleep(1000);
+
+
+            //click on go to the last page button to confirm that the record has been deleted
+
+            driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[4]/a[4]/span")).Click();
+            Thread.Sleep(1000);
+
+            IWebElement Deleted = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+
+            Assert.That(Deleted.Text != "Team1", "Time and Record hasn't been deleted sucessfully");
+            
         }
     }
 }

@@ -13,7 +13,7 @@ namespace May2022.utilities
         //reusable function for wait amd clickable
         public static void WaitToBeClickable(IWebElement driver, string locator, string locatorValue, int seconds)
         {
-            var wait = new WebDriverWait ((IWebDriver)driver, new TimeSpan(0, 0, 2));
+            var wait = new WebDriverWait ((IWebDriver)driver, new TimeSpan(0, 0, seconds));
 
             if ( locator == "XPath")
             {
@@ -27,6 +27,16 @@ namespace May2022.utilities
             {
                 wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(By.CssSelector(locatorValue)));
             }
+        }
+
+        internal static void WaitToBeClickable(IWebDriver driver, string v1, string v2, int v3)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal static void WaitToBeClickable(IWebDriver driver, string v)
+        {
+            throw new NotImplementedException();
         }
 
         public static void WaitToBeVisible(IWebElement driver, string locator, string locatorValue, int seconds)
