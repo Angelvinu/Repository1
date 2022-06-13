@@ -54,20 +54,16 @@ namespace May2022.pages
             Thread.Sleep(2000);
 
             //check if the material record was created sucessfully
-            IWebElement RecentCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
-            IWebElement RecentTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
-            IWebElement RecentDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
-            IWebElement RecentPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+            
+           
+            
+            
 
             Thread.Sleep(2000);
 
             //Assertion
 
-            Assert.That(RecentCode.Text == "visual1", "Actual Material record and expected doesnot match.");
-            Assert.That(RecentTypeCode.Text == "M", "Actual code and expected doesnot match.");
-            Assert.That(RecentDescription.Text == "sample 1", "Actual description and expected doesnot match.");
-            Assert.That(RecentPrice.Text == "$60.00", "Actual price and expected doesnot match.");
-
+            //the code has been sent to the step definition file under hookup
 
             //if (materialRecord.Text == "visual1")
             //{
@@ -77,6 +73,35 @@ namespace May2022.pages
             //{
             //    Console.WriteLine("Material record was not created sucessfully.");
             //}
+        }
+
+        public string GetNewCode(IWebDriver driver)
+
+        {
+            IWebElement RecentCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[1]"));
+            return RecentCode.Text;
+
+        }
+
+        public string GetNewTypeCode(IWebDriver driver)
+
+        {
+            IWebElement RecentTypeCode = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[2]"));
+            return RecentTypeCode.Text;
+        }
+
+        public string GetNewDescription(IWebDriver driver)
+
+        {
+            IWebElement RecentDescription = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[3]"));
+            return RecentDescription.Text;
+        }
+
+        public string GetNewPrice(IWebDriver driver)
+
+        {
+            IWebElement RecentPrice = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[4]"));
+            return RecentPrice.Text;
         }
         public void EditTM(IWebDriver driver)
 

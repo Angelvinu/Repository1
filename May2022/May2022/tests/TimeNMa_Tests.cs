@@ -9,35 +9,23 @@ namespace May2022.utilities
 {
 
     [TestFixture]
+    [Parallelizable]
     public class TimeNMa_Tests : CommonDriver
 
     {
-    
 
-        [SetUp]
-        public void LoginActions()
-        {
-            //setting a driver interface
-            driver = new ChromeDriver();
+        Homepage Homepageobj = new Homepage();
+        TMPage TMPageojb = new TMPage();
 
-            //login page object initialisation and definition
-
-            LoginPage LoginPageobj = new LoginPage();
-            LoginPageobj.LoginSteps(driver);
-
-            //home page object initialisation and definition
-
-            Homepage Homepageobj = new Homepage();
-            Homepageobj.GoToHomePg(driver);
-
-        }
-
+       
         [Test, Order(1), Description("First Test")]
 
         public void CreateTM()
         {
 
-            TMPage TMPageojb = new TMPage();
+            //home page object initialisation and definition
+            Homepageobj.GoToHomePg(driver);
+
             TMPageojb.CreateTM(driver);
         }
 
@@ -45,7 +33,9 @@ namespace May2022.utilities
 
         public void EditTM()
         {
-            TMPage TMPageojb = new TMPage();
+            //home page object initialisation and definition
+            Homepageobj.GoToHomePg(driver);
+
             TMPageojb.EditTM(driver);
         }
 
@@ -53,16 +43,12 @@ namespace May2022.utilities
 
         public void DeleteTM()
         {
-            TMPage TMPageojb = new TMPage();
+            //home page object initialisation and definition
+            Homepageobj.GoToHomePg(driver);
             TMPageojb.DeleteTM(driver);
         }
 
-        [TearDown]
-
-        public void CloseTest()
-        {
-            driver.Quit();
-        }
+      
     }
 }
 

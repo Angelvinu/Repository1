@@ -19,5 +19,12 @@ namespace May2022.pages
 
             Thread.Sleep(2000);
         }
+
+        public void GoToEmployeePage(IWebDriver driver)
+        {
+
+            // navigate to employee page
+
+        }
     }
 }
